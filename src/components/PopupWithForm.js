@@ -1,7 +1,7 @@
 import React from "react";
 
 function PopupWithForm(props) {
-  let isOpenPopup = props.isOpen ? "popup_opened" : "";
+  const isOpenPopup = props.isOpen ? "popup_opened" : "";
   
   return (
     <section className={`popup popup_${props.name} ${isOpenPopup}`}>
@@ -21,7 +21,7 @@ function PopupWithForm(props) {
             aria-label="Сохранить"
             onClick={props.onSubmit}
           >
-            {props.buttonText}
+            {props.buttonText || 'Сохранить'}
           </button>
         </form>
       </div>
