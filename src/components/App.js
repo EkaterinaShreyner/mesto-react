@@ -13,30 +13,25 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
 
   function handleEditProfileClick() {
-    console.log("открыт попап1");
     setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    console.log("открыт попап2");
     setIsAddPlacePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
-    console.log("открыт попап3");
     setIsEditAvatarPopupOpen(true);
   }
 
   function closeAllPopups() {
-    console.log("закрыт попап");
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard(null);
   }
 
   function handleCardClick(card) {
-    console.log("попап картинка");
     setSelectedCard(card);
   }
 
@@ -57,7 +52,6 @@ function App() {
         />
         <Footer />
         <PopupWithForm
-          name="edit-profile"
           form="form-edit-profile"
           title="Редактировать профиль"
           buttonText="Сохранить"
@@ -87,7 +81,6 @@ function App() {
           <span className="popup__input-error profile-info-error"></span>
         </PopupWithForm>
         <PopupWithForm
-          name="cards"
           form="form-cards"
           title="Новое место"
           buttonText="Сохранить"
@@ -117,13 +110,11 @@ function App() {
           <span className="popup__input-error card-link-input-error"></span>
         </PopupWithForm>
         <PopupWithForm
-          name="confirm"
           form="form-confirm"
           title="Вы уверены?"
           buttonText="Да"
         ></PopupWithForm>
         <PopupWithForm
-          name="avatar"
           form="form-avatar"
           title="Обновить аватар"
           buttonText="Сохранить"
