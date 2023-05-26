@@ -14,10 +14,10 @@ function ImagePopup(props) {
         </button>
         <img
           className="popup__image-full"
-          src={props.card ? props.card.link : ""}
-          alt={props.card ? props.card.name : ""}
+          src={props.card?.link} // опциональную цепочку, остановит вычисление если значение перед ?. равно null или undefined
+          alt={props.card?.name}
         />
-        <h2 className="popup__title popup__title_image-full">{props.card ? props.card.name : ""}</h2>
+        <h2 className="popup__title popup__title_image-full">{props.card?.name}</h2>
       </div>
     </section>
   )
