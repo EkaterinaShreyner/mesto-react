@@ -1,20 +1,23 @@
 // import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import api from "../utils/Api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
+  // const [userName, setUserName] = useState("");
+  // const [userDescription, setUserDescription] = useState("");
+  // const [userAvatar, setUserAvatar] = useState("");
   const [cards, setCards] = useState([]);
+
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
       .then(([dataUser, cards]) => {
-        setUserName(dataUser.name);
-        setUserDescription(dataUser.about);
-        setUserAvatar(dataUser.avatar);
+        // setUserName(dataUser.name);
+        // setUserDescription(dataUser.about);
+        // setUserAvatar(dataUser.avatar);
         setCards(cards);
       })
       .catch((err) => {
@@ -28,14 +31,15 @@ function Main(props) {
         <div className="profile__pen">
           <img
             className="profile__avatar"
-            src={userAvatar}
+            src={currentUser.avatar}
+            // src={userAvatar}
             alt="Аватар"
             onClick={props.onEditAvatar}
           />
         </div>
         <div className="profile__info">
           <div className="profile__header">
-            <h1 className="profile__title">{userName}</h1>
+            <h1 className="profile__title">{currentUser.name}</h1>
             <button
               className="profile__edit-button"
               type="button"
@@ -44,7 +48,7 @@ function Main(props) {
             >
             </button>
           </div>
-          <p className="profile__subtitle">{userDescription}</p>
+          <p className="profile__subtitle">{currentUser.about}</p>
         </div>
         <button
           className="profile__add-button"
