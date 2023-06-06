@@ -1,7 +1,13 @@
 import React from "react";
+// import { useState } from "react";
 
 function PopupWithForm(props) {
+  // const [isLoading, setIsLoading] = useState(false);
   const popupOpened = props.isOpen ? "popup_opened" : "";
+
+  // function renderLoading() {
+  //   setIsLoading(true)
+  // }
   
   return (
     <section className={`popup ${popupOpened}`}>
@@ -19,8 +25,10 @@ function PopupWithForm(props) {
             className="popup__button"
             type="submit"
             aria-label="Сохранить"
+            onClick={props.loading}
           >
             {props.buttonText || 'Сохранить'}
+            {/* {isLoading && 'Сохрнение...'} */}
           </button>
         </form>
       </div>

@@ -94,6 +94,15 @@ class Api {
     })
     .then(this._getResponse)
   }
+
+  // проверка на лайк
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return this.deleteLike(cardId);
+    } else {
+      return this.putLike(cardId);
+    }
+  }
 }
 
 // export default Api;

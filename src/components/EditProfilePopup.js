@@ -5,7 +5,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup(props) {
 
-  // const [value, setValue] = useState({name: "", about: ""}); 
   const [name, setName] = useState('')
   const [about, setAbout] = useState('');
   const currentUser = useContext(CurrentUserContext);
@@ -31,7 +30,6 @@ function EditProfilePopup(props) {
     })
   }
 
-
   return (
     <PopupWithForm
       form="form-edit-profile"
@@ -40,6 +38,7 @@ function EditProfilePopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={submitForm}
+      // loading={renderLoading}
     >
       <input
         className="popup__input popup__input_type_name"
@@ -50,7 +49,7 @@ function EditProfilePopup(props) {
         maxLength="40"
         id="profile-name"
         onChange={handleChangeInputName}
-        value={name}
+        value={name || ""}
       />
       <span className="popup__input-error profile-name-error"></span>
       <input
@@ -62,7 +61,7 @@ function EditProfilePopup(props) {
         maxLength="200"
         id="profile-info"
         onChange={handleChangeInputAbout}
-        value={about}
+        value={about || ""}
       />
       <span className="popup__input-error profile-info-error"></span>
     </PopupWithForm>
