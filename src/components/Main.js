@@ -46,6 +46,7 @@ function Main(props) {
           card={card}
           onCardClick={props.onCardClick}
           onCardDelete={props.onCardDelete}
+          // popupConfirm={props.popupConfirm}
           onCardLike={props.onCardLike}
           />
         ))}

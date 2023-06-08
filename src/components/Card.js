@@ -23,6 +23,9 @@ function Card(props) {
 
   function handleCardDelete() {
     props.onCardDelete(props.card);
+    // props.popupConfirm(true)
+
+
   }
 
   return(
@@ -33,7 +36,6 @@ function Card(props) {
             type="button"
             aria-label="Удалить"
             onClick={handleCardDelete}
-            // onClick={props.onCardDelete}
           />} 
         <img className="element__image"
           src={props.card.link}

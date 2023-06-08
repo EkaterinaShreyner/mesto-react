@@ -7,6 +7,7 @@ import ImagePopup from "./ImagePopup.js";
 import api from "../utils/Api.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
+import PopupConfirm from "./PopupConfirm.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
@@ -15,6 +16,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isPopupConfirmOpen, setIsPopupConfirmOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
@@ -49,6 +51,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsPopupConfirmOpen(false)
     setSelectedCard(null);
   }
 
@@ -67,13 +70,13 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    console.log(card);
+    console.log(card)
     api.deleteCard(card._id)
       .then(() => {
-        // setCards((cards) => cards.filter((el) => el._id !== card._id))
         const newCards = cards.filter((el) => el._id !== card._id)
         setCards(newCards)
         console.log('delete')
+        // setIsPopupConfirmOpen(false)
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`)
@@ -131,6 +134,7 @@ function App() {
         setIsLoading(false)
       })
   }
+
  
   return (
     <div className="root">
@@ -145,6 +149,7 @@ function App() {
             cards={cards}
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
+            // popupConfirm={setIsPopupConfirmOpen}
           />
           <Footer />
           <EditProfilePopup
@@ -168,15 +173,17 @@ function App() {
             isLoading={isLoading}
             closeOverlay={setIsAddPlacePopupOpen}
           />
-          <PopupWithForm
-            form="form-confirm"
-            title="Вы уверены?"
-            buttonText="Да"
-          ></PopupWithForm>
+          <PopupConfirm
+            isOpen={isPopupConfirmOpen}
+            onClose={closeAllPopups}
+            // confirmSubmit={handleCardDelete}
+            // submitFormConfirm={handleCardDelete}
+            closeOverlay={setIsPopupConfirmOpen}
+          ></PopupConfirm>
           <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups}
-          closeOverlay={setSelectedCard}
+            card={selectedCard}
+            onClose={closeAllPopups}
+            closeOverlay={setSelectedCard}
           />
         </CurrentUserContext.Provider>
       </div>
