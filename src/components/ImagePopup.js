@@ -2,9 +2,14 @@ import React from "react";
 
 function ImagePopup(props) {
   const popupOpened = props.card ? "popup_opened" : "";
+
+  function handleClickOverlay() {
+    props.closeOverlay(null)
+  }
+
   return (
-    <section className={`popup ${popupOpened}`}>
-      <div className="popup__container">
+    <section className={`popup ${popupOpened}`} onClick={handleClickOverlay}>
+      <div className="popup__container" onClick={evt => evt.stopPropagation()}>
         <button
           className="popup__button-close"
           type="button"

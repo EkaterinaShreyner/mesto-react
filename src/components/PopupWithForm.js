@@ -1,17 +1,16 @@
 import React from "react";
-// import { useState } from "react";
 
 function PopupWithForm(props) {
-  // const [isLoading, setIsLoading] = useState(false);
+
+  function handleClickOverlay() {
+    props.closeOverlay(false)
+  }
   const popupOpened = props.isOpen ? "popup_opened" : "";
 
-  // function renderLoading() {
-  //   setIsLoading(true)
-  // }
-  
+
   return (
-    <section className={`popup ${popupOpened}`}>
-      <div className="popup__container">
+    <section className={`popup ${popupOpened}`} onClick={handleClickOverlay}>
+      <div className="popup__container" onClick={evt => evt.stopPropagation()}>
         <button
           className="popup__button-close"
           type="button"
@@ -25,10 +24,10 @@ function PopupWithForm(props) {
             className="popup__button"
             type="submit"
             aria-label="Сохранить"
-            onClick={props.loading}
           >
-            {props.buttonText || 'Сохранить'}
-            {/* {isLoading && 'Сохрнение...'} */}
+            {/* {props.buttonText || 'Сохранить'} */}
+            {props.isLoading ? "Сохранение..." : props.buttonText}
+
           </button>
         </form>
       </div>
@@ -37,3 +36,4 @@ function PopupWithForm(props) {
 }
 
 export default PopupWithForm;
+ 

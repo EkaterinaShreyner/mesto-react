@@ -21,6 +21,8 @@ function EditAvatarPopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={submitForm}
+      isLoading={props.isLoading}
+      closeOverlay={props.closeOverlay}
       >
       <input
         className="popup__input popup__input_type_avatar-link"

@@ -28,6 +28,7 @@ function EditProfilePopup(props) {
       name: name,
       about: about,
     })
+
   }
 
   return (
@@ -38,7 +39,8 @@ function EditProfilePopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={submitForm}
-      // loading={renderLoading}
+      isLoading={props.isLoading}
+      closeOverlay={props.closeOverlay}
     >
       <input
         className="popup__input popup__input_type_name"
