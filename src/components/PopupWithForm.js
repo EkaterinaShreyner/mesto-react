@@ -1,12 +1,25 @@
-import React from "react";
+import { useEffect } from "react";
 
 function PopupWithForm(props) {
 
   function handleClickOverlay() {
     props.closeOverlay(false)
   }
-  const popupOpened = props.isOpen ? "popup_opened" : "";
 
+  function handleCloseByEsc(evt) {
+    if (evt.key === 'Escape') {
+      props.onClose(false)
+    }
+  }
+
+  useEffect(() =>{
+    document.addEventListener('keydown', handleCloseByEsc)
+    return() => {
+      document.removeEventListener('keydown', handleCloseByEsc)
+    }
+  }, [])
+
+  const popupOpened = props.isOpen ? "popup_opened" : "";
 
   return (
     <section className={`popup ${popupOpened}`} onClick={handleClickOverlay}>
@@ -17,7 +30,7 @@ function PopupWithForm(props) {
           aria-label="Закрыть окно"
           onClick={props.onClose}
         ></button>
-        <form className="popup__form" name={props.form} onSubmit={props.onSubmit} noValidate>
+        <form className="popup__form" name={props.form} onSubmit={props.onSubmit}>
           <h2 className="popup__title">{props.title}</h2>
           {props.children}
           <button
@@ -25,9 +38,7 @@ function PopupWithForm(props) {
             type="submit"
             aria-label="Сохранить"
           >
-            {/* {props.buttonText || 'Сохранить'} */}
             {props.isLoading ? "Сохранение..." : props.buttonText}
-
           </button>
         </form>
       </div>

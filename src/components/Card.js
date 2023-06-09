@@ -4,7 +4,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function Card(props) {
 
   const currentUser = useContext(CurrentUserContext);
-  // console.log(props);
   const isOwn = props.card.owner._id === currentUser._id;
   
   // проверяем, есть ли лайк пользователя на карточке
@@ -22,10 +21,7 @@ function Card(props) {
   }
 
   function handleCardDelete() {
-    props.onCardDelete(props.card);
-    // props.popupConfirm(true)
-
-
+    props.onCardDelete(props.card)
   }
 
   return(

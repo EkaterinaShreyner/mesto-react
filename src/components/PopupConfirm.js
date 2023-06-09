@@ -5,7 +5,7 @@ function PopupConfirm(props) {
 
   function submitForm(evt) {
     evt.preventDefault();
-    // props.confirmSubmit()
+    props.onConfirmDeleteCard();
   }
 
   return (
@@ -16,6 +16,7 @@ function PopupConfirm(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={submitForm}
+      closeOverlay={props.closeOverlay}
       ></PopupWithForm>
   )
 } 

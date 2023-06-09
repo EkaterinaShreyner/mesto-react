@@ -1,4 +1,3 @@
-// import React from "react";
 import { useContext } from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -46,7 +45,6 @@ function Main(props) {
           card={card}
           onCardClick={props.onCardClick}
           onCardDelete={props.onCardDelete}
-          // popupConfirm={props.popupConfirm}
           onCardLike={props.onCardLike}
           />
         ))}

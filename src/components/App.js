@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import Main from "./Main.js";
-import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/Api.js";
 import EditProfilePopup from "./EditProfilePopup.js";
@@ -21,12 +20,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedConfirmDeleteCard, setSelectedConfirmDeleteCard] = useState(null);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
       .then(([dataUser, cards]) => {
-        // console.log(dataUser);
-        // console.log(cards);
         setCurrentUser(dataUser);
         setCards(cards);
       })
@@ -70,27 +68,33 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    console.log(card)
-    api.deleteCard(card._id)
+    setSelectedConfirmDeleteCard(card);
+    setIsPopupConfirmOpen(true);
+  }
+
+  function handleConfirmDeleteCard() {
+    api.deleteCard(selectedConfirmDeleteCard._id)
       .then(() => {
-        const newCards = cards.filter((el) => el._id !== card._id)
+        const newCards = cards.filter((el) => el !== selectedConfirmDeleteCard)
         setCards(newCards)
-        console.log('delete')
-        // setIsPopupConfirmOpen(false)
+        setIsPopupConfirmOpen(false)
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`)
+      })
+      .finally(() => {
+        setIsPopupConfirmOpen(false)
       })
   }
 
   function handleUpdateUser(dataUser) {
     setIsLoading(true)
-    console.log(isLoading)
     api.patchUserInfo(dataUser) 
       .then((dataUser) => {
         setCurrentUser({
           name: dataUser.name,
-          about: dataUser.about
+          about: dataUser.about,
+          avatar: dataUser.avatar
         })
         closeAllPopups();
       })
@@ -107,7 +111,9 @@ function App() {
     api.patchAvatar({avatar})
       .then((dataUser) => {
         setCurrentUser({
-          avatar: dataUser.avatar
+          avatar: dataUser.avatar,
+          name: dataUser.name,
+          about: dataUser.about
         })
         closeAllPopups();
       })
@@ -123,7 +129,6 @@ function App() {
     setIsLoading(true)
     api.postNewCard({name, link})
       .then((newCard) => {
-        console.log(newCard)
         setCards([newCard, ...cards])
         closeAllPopups();
       })
@@ -135,7 +140,6 @@ function App() {
       })
   }
 
- 
   return (
     <div className="root">
       <div className="page">
@@ -149,7 +153,6 @@ function App() {
             cards={cards}
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
-            // popupConfirm={setIsPopupConfirmOpen}
           />
           <Footer />
           <EditProfilePopup
@@ -176,8 +179,7 @@ function App() {
           <PopupConfirm
             isOpen={isPopupConfirmOpen}
             onClose={closeAllPopups}
-            // confirmSubmit={handleCardDelete}
-            // submitFormConfirm={handleCardDelete}
+            onConfirmDeleteCard={handleConfirmDeleteCard}
             closeOverlay={setIsPopupConfirmOpen}
           ></PopupConfirm>
           <ImagePopup
